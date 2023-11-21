@@ -4,20 +4,28 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-# Determine that the user has entered a valid city
-## Work out how to include spaces, i.e New York, etc don't work
+
 def city_check():
+    '''
+        Determine that the user has entered a valid city
+    '''
     user_input = input('Please type in the name of a city. ').lower()
+    user_input_list = user_input.split()
     check = True
     while check:
-        if user_input == '' or not(user_input.isalpha()):
+        if user_input == '' or not all(item.isalpha() for item in user_input_list):
             print('Please enter a valid city name.')
             user_input = input('Please type in the name of a city. ')
+            user_input_list = user_input.split()
         else:
             check = False
+
     return user_input
 
 def api_call():
+    '''
+        Make the API call and save the result in the local directory as a JSON formatted .txt file
+    '''
     city = city_check()
     # https to protect passwords, tokens, or personal data being intercepted
     url = 'https://durvp011gk.execute-api.eu-west-1.amazonaws.com/v1/api/forecasts?city=%s' % city 
@@ -48,7 +56,7 @@ def api_call():
         else:
             screen_temp = no_recorded_value
         if 'time' in item:
-            # Return the date in a simplified format
+            # Return the date and time in a simplified format
             date_figure = item['time'].split('T')[0]
             time = item['time'].split('T')[1][:-1]
         else:
