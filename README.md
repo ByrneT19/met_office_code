@@ -5,5 +5,11 @@ This programme executes an API GET request to an AWS server to obtain historical
 
 The request is made via a https URL to protect user data from interception and checks that the response is JSON as requested in the headers before allowing the programme to compile a Python dictionary of the response.
 
+## List of Modules Used
+requests
+json
+dotenv 
+os
+
 To run this file, go to the local directory it is contained in and run:
 `python3 ./api.py`
